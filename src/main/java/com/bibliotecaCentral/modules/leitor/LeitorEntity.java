@@ -7,10 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Component
 @Data
 @Entity(name = "leitor")
 public class LeitorEntity {
@@ -26,5 +29,6 @@ public class LeitorEntity {
     private String email;
     private String password;
     private String telefone;
-    private LocalDate dataCadastro;
+    @CreationTimestamp
+    private LocalDateTime dataCadastro;
 }

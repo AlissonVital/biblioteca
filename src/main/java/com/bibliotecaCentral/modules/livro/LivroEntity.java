@@ -5,9 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-
+@Component
 @Data
 @Entity(name = "livro")
 public class LivroEntity {
