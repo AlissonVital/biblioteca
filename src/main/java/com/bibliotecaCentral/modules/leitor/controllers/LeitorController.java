@@ -1,5 +1,6 @@
 package com.bibliotecaCentral.modules.leitor.controllers;
 
+import com.bibliotecaCentral.exceptions.UserFoundException;
 import com.bibliotecaCentral.modules.leitor.LeitorEntity;
 import com.bibliotecaCentral.modules.leitor.LeitorRepository;
 import jakarta.validation.Valid;
@@ -18,6 +19,11 @@ public class LeitorController {
 
     @PostMapping("/")
     public LeitorEntity create(@Valid @RequestBody LeitorEntity leitorEntity) {
+        this.leitorRepository
+                .findByUsernameOrEmail(leitorEntity.getUsername(), leitorEntity.getEmail())
+                .ifPresent((user) -> {
+                    throw new UserFoundException();
+        });
         return this.leitorRepository.save(leitorEntity);
     }
 }
