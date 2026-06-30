@@ -1,6 +1,5 @@
-package com.bibliotecaCentral.modules.livro;
+package com.bibliotecaCentral.modules.bibliotecaCompany.entities;
 
-import com.bibliotecaCentral.modules.biblioteca.BibliotecaEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,7 +25,7 @@ public class LivroEntity {
 
     @ManyToOne()
     @JoinColumn(name = "biblioteca_id", insertable = false, updatable = false)
-    private BibliotecaEntity bibliotecaEntity;
+    private BibliotecaCompanyEntity bibliotecaEntity;
 
     @Column(name = "biblioteca_id")
     private UUID bibliotecaId;

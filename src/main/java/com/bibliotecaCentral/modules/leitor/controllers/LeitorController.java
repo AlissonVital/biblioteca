@@ -1,10 +1,10 @@
 package com.bibliotecaCentral.modules.leitor.controllers;
 
-import com.bibliotecaCentral.exceptions.UserFoundException;
 import com.bibliotecaCentral.modules.leitor.LeitorEntity;
-import com.bibliotecaCentral.modules.leitor.LeitorRepository;
+import com.bibliotecaCentral.modules.leitor.useCases.CreateLeitorUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeitorController {
 
     @Autowired
-    private LeitorRepository leitorRepository;
+    private CreateLeitorUseCase createLeitorUseCase;
 
     @PostMapping("/")
-    public LeitorEntity create(@Valid @RequestBody LeitorEntity leitorEntity) {
-        this.leitorRepository
-                .findByUsernameOrEmail(leitorEntity.getUsername(), leitorEntity.getEmail())
-                .ifPresent((user) -> {
-                    throw new UserFoundException();
-        });
-        return this.leitorRepository.save(leitorEntity);
+    public ResponseEntity<Object> create(@Valid @RequestBody LeitorEntity leitorEntity) {
+        try {
+            var result = this.createLeitorUseCase.execute(leitorEntity);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
+
     }
 }

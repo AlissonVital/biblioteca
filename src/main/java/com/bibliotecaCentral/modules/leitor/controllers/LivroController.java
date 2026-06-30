@@ -1,6 +1,6 @@
-package com.bibliotecaCentral.modules.livro.controllers;
+package com.bibliotecaCentral.modules.leitor.controllers;
 
-import com.bibliotecaCentral.modules.livro.LivroEntity;
+import com.bibliotecaCentral.modules.bibliotecaCompany.entities.LivroEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
