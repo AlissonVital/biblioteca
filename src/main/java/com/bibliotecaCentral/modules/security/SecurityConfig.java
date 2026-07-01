@@ -10,7 +10,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/leitor/").permitAll()
+                    .requestMatchers("/bibliotecaCompany/").permitAll();
+                    auth.anyRequest().authenticated();
+                })
+        ;
         return http.build();
     }
 }
