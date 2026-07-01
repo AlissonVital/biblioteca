@@ -2,7 +2,7 @@ package com.bibliotecaCentral.modules.bibliotecaCompany;
 
 import com.bibliotecaCentral.modules.bibliotecaCompany.entities.BibliotecaCompanyEntity;
 import com.bibliotecaCentral.modules.bibliotecaCompany.useCases.CreateBibliotecaCompanyUseCase;
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class BibliotecaCompanyController {
     private CreateBibliotecaCompanyUseCase createBibliotecaCompanyUseCase;
 
     @PostMapping("/")
-    public ResponseEntity<Object> create(@RequestBody BibliotecaCompanyEntity bibliotecaCompanyEntity) {
+    public ResponseEntity<Object> create(@RequestBody @Valid BibliotecaCompanyEntity bibliotecaCompanyEntity) {
         try {
             var result = this.createBibliotecaCompanyUseCase.execute(bibliotecaCompanyEntity);
             return ResponseEntity.ok().body(result);

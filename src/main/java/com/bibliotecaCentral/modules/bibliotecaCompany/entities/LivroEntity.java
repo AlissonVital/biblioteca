@@ -25,7 +25,7 @@ public class LivroEntity {
 
     @ManyToOne()
     @JoinColumn(name = "biblioteca_id", insertable = false, updatable = false)
-    private BibliotecaCompanyEntity bibliotecaEntity;
+    private BibliotecaCompanyEntity bibliotecaCompanyEntity;
 
     @Column(name = "biblioteca_id")
     private UUID bibliotecaId;
