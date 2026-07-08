@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface BibliotecaCompanyRepository extends JpaRepository<BibliotecaCompanyEntity, UUID> {
     Optional<BibliotecaCompanyEntity> findByUsernameOrEmail(String username, String email);
+    Optional<BibliotecaCompanyEntity> findByUsername(String username);
 }
