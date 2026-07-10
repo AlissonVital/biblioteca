@@ -14,7 +14,7 @@ public class ProfileLeitorUseCase {
     @Autowired
     private LeitorRepository leitorRepository;
 
-    public ProfileLeitorResponseDTO.ProfileLeitorResponseDTOBuilder execute(UUID idLeitor) {
+    public ProfileLeitorResponseDTO execute(UUID idLeitor) {
 
         var leitor = this.leitorRepository.findById(idLeitor)
                 .orElseThrow(() -> {
@@ -27,7 +27,8 @@ public class ProfileLeitorUseCase {
                 .cpf(leitor.getCpf())
                 .email(leitor.getEmail())
                 .telefone(leitor.getTelefone())
-                .dataCadastro(leitor.getDataCadastro());
+                .dataCadastro(leitor.getDataCadastro())
+                .build();
         return leitroDTO;
     }
 }
