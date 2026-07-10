@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface LeitorRepository extends JpaRepository<LeitorEntity, UUID> {
     Optional<LeitorEntity> findByUsernameOrEmail(String username, String email);
+    Optional<LeitorEntity> findByUsername(String username);
 }

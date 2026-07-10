@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
+import java.time.Duration;
+import java.time.Instant;
 
 @Service
 public class AuthBibliotecaCompanyUseCase {
@@ -39,7 +41,10 @@ public class AuthBibliotecaCompanyUseCase {
 
         // VERIFICAÇÃO SE FOR IGUAL = GERAR TOKEN
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        var token = JWT.create().withIssuer("livros").withSubject(bibliotecaCompany.getId().toString()).sign(algorithm);
+        var token = JWT.create().withIssuer("livros")
+                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
+                .withSubject(bibliotecaCompany
+                .getId().toString()).sign(algorithm);
         return token;
     }
 

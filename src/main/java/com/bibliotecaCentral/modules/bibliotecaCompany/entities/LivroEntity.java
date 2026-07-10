@@ -1,7 +1,10 @@
 package com.bibliotecaCentral.modules.bibliotecaCompany.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
 import jakarta.persistence.Column;
@@ -12,6 +15,9 @@ import java.util.UUID;
 @Component
 @Data
 @Entity(name = "livro")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LivroEntity {
 
     @Id
