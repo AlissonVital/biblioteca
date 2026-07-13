@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/livro")
+@RequestMapping("/bibliotecaCompany/livro")
 public class LivroController {
 
     @Autowired
     private CreateLivroUseCase createLivroUseCase;
 
     @PostMapping({"", "/"})
-
+    @PreAuthorize("hasRole('BIBLIOTECACOMPANY')")
     public LivroEntity create(@RequestBody @Valid CreateLivroDTO createLivroDTO, HttpServletRequest request) {
         var bibliotecaCompanyId = request.getAttribute("bibliotecaCompany_id");
 
