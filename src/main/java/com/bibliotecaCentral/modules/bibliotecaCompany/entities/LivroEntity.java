@@ -25,7 +25,10 @@ public class LivroEntity {
     private UUID id;
     private String titulo;
     private String autor;
+
+    @Column(unique = true, nullable = false)
     private String isbn;
+
     private String quantidadeTotal;
     private String quantidadeDisponivel;
 
