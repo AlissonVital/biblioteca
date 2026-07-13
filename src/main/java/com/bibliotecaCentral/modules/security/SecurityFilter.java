@@ -25,10 +25,17 @@ public class SecurityFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-        // SecurityContextHolder.getContext().setAuthentication(null);
         String header = request.getHeader("Authorization");
+        String requestURI = request.getRequestURI();
 
-        if (request.getRequestURI().startsWith("/bibliotecaCompany")) {
+        // Login não deve validar JWT — apenas gerar o token
+        if (requestURI.equals("/bibliotecaCompany/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // /livro também usa o token da bibliotecaCompany (bibliotecaCompany_id)
+        if (requestURI.startsWith("/bibliotecaCompany") || requestURI.startsWith("/livro")) {
             if (header != null) {
                 var subjectToken = this.jwtProvider.validateToken(header);
                 if (subjectToken.isEmpty()) {

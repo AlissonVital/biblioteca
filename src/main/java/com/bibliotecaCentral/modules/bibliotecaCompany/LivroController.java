@@ -20,7 +20,7 @@ public class LivroController {
     @Autowired
     private CreateLivroUseCase createLivroUseCase;
 
-    @PostMapping("/")
+    @PostMapping({"", "/"})
     public LivroEntity create(@RequestBody @Valid CreateLivroDTO createLivroDTO, HttpServletRequest request) {
         var bibliotecaCompanyId = request.getAttribute("bibliotecaCompany_id");
 
@@ -30,6 +30,8 @@ public class LivroController {
                 .bibliotecaId(UUID.fromString(bibliotecaCompanyId.toString()))
                 .titulo(createLivroDTO.getTitulo())
                 .autor(createLivroDTO.getAutor())
+                .isbn(createLivroDTO.getIsbn())
+                .quantidadeTotal(createLivroDTO.getQuantidadeTotal())
                 .quantidadeDisponivel(createLivroDTO.getQuantidadeDisponivel())
                 .build();
 

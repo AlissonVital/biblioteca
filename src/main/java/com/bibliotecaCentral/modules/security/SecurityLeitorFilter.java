@@ -23,10 +23,16 @@ public class SecurityLeitorFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // SecurityContextHolder.getContext().setAuthentication(null);
         String header = request.getHeader("Authorization");
+        String requestURI = request.getRequestURI();
 
-        if (request.getRequestURI().startsWith("/leitor")) {
+        // Login não deve validar JWT — apenas gerar o token
+        if (requestURI.equals("/leitor/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (requestURI.startsWith("/leitor")) {
             if (header != null) {
                 var token = this.jwtLeitorProvider.validateToken(header);
 

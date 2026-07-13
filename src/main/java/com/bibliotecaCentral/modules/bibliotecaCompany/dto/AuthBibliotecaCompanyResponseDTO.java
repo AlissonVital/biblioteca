@@ -1,14 +1,17 @@
 package com.bibliotecaCentral.modules.bibliotecaCompany.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class AuthBibliotecaCompanyDTO {
+@NoArgsConstructor
+public class AuthBibliotecaCompanyResponseDTO {
 
-    private String password;
-    private String username;
+    private String access_token;
+    private Long expires_in;
+
 }
