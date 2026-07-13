@@ -6,6 +6,7 @@ import com.bibliotecaCentral.modules.bibliotecaCompany.useCases.CreateLivroUseCa
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class LivroController {
     private CreateLivroUseCase createLivroUseCase;
 
     @PostMapping({"", "/"})
+
     public LivroEntity create(@RequestBody @Valid CreateLivroDTO createLivroDTO, HttpServletRequest request) {
         var bibliotecaCompanyId = request.getAttribute("bibliotecaCompany_id");
 

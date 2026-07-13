@@ -3,6 +3,7 @@ package com.bibliotecaCentral.modules.bibliotecaCompany.useCases;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bibliotecaCentral.modules.bibliotecaCompany.dto.AuthBibliotecaCompanyDTO;
+import com.bibliotecaCentral.modules.bibliotecaCompany.dto.AuthBibliotecaCompanyResponseDTO;
 import com.bibliotecaCentral.modules.bibliotecaCompany.repositories.BibliotecaCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.AuthenticationException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class AuthBibliotecaCompanyUseCase {
@@ -26,7 +28,7 @@ public class AuthBibliotecaCompanyUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String execute(AuthBibliotecaCompanyDTO authBibliotecaCompanyDTO) throws AuthenticationException {
+    public AuthBibliotecaCompanyResponseDTO execute(AuthBibliotecaCompanyDTO authBibliotecaCompanyDTO) throws AuthenticationException {
         var bibliotecaCompany = this.bibliotecaCompanyRepository.findByUsername(authBibliotecaCompanyDTO.getUsername()).orElseThrow(
                 () -> {
                     throw new UsernameNotFoundException("username ou password incorreto!!!!!");
@@ -41,11 +43,20 @@ public class AuthBibliotecaCompanyUseCase {
 
         // VERIFICAÇÃO SE FOR IGUAL = GERAR TOKEN
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
+
+        var expiresIn = Instant.now().plus(Duration.ofHours(2));
+
         var token = JWT.create().withIssuer("livros")
-                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
+                .withClaim("roles", Arrays.asList("BIBLIOTECACOMPANY"))
+                .withExpiresAt(expiresIn)
                 .withSubject(bibliotecaCompany
                 .getId().toString()).sign(algorithm);
-        return token;
+
+        var authBibliotecaCompanyResponseDTO = AuthBibliotecaCompanyResponseDTO.builder()
+                .access_token(token)
+                .expires_in(expiresIn.toEpochMilli())
+                .build();
+        return authBibliotecaCompanyResponseDTO;
     }
 
 }
